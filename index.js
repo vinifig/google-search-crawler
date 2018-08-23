@@ -1,16 +1,23 @@
 const fs = require('fs');
 const puppeteer = require('puppeteer');
-const {GoogleCrawler, GenericCrawler} = require('./crawler');
+const { GoogleCrawler, GenericCrawler } = require('./crawler');
 const { formatFilePath, formatFileName } = require('./misc/utils');
 
+const screenshotsFolder = './screenshots';
+const googleScreenShotsFolder = `${screenshotsFolder}/google`;
+const googleSearchFolder = `${screenshotsFolder}/google-search`;
 const terms = process.argv.slice(2).join(' ') || 'Nodejs puppeteer crawler';
+
+function createFolderIfNotExists (folder) {
+    if (!fs.existsSync(folder)) {
+        fs.mkdirSync(folder);
+    }
+}
 
 async function getPicturesOfSearchResult ({links = []} = {}) {
     const browser = await puppeteer.launch();
-    let screenshotBasePath = formatFilePath(`./screenshots/google-search/${terms}`);
-    if (!fs.existsSync(screenshotBasePath)) {
-        fs.mkdirSync(screenshotBasePath);
-    }
+    let screenshotBasePath = formatFilePath(`${googleSearchFolder}/${terms}`);
+    createFolderIfNotExists(screenshotBasePath);
     const genericCrawler = new GenericCrawler(browser, screenshotBasePath);
     for (let link of links) {
         let endpoint = link.href;
@@ -68,6 +75,9 @@ async function startParallel() {
 
 async function start () {
     // await startParallel();
+    createFolderIfNotExists(screenshotsFolder);
+    createFolderIfNotExists(googleScreenShotsFolder);
+    createFolderIfNotExists(googleSearchFolder);
     await startAsync();
 }
 
