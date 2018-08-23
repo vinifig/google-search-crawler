@@ -2,6 +2,9 @@
 
 A `Node.js` crawler example with `puppeteer`
 
+## Requirements
+
+* Node.js 8.x or higher
 
 ## How to use
 
