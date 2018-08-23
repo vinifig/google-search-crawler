@@ -5,9 +5,10 @@ A `Node.js` crawler example with `puppeteer`
 
 ## How to use
 
-Clone this repository and run above command on project folder:
+Clone this repository and run above commands on project folder:
 
 ``` sh
+$ npm install
 $ node index.js <search terms>
 ```
 
